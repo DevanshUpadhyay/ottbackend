@@ -12,6 +12,20 @@ export const getAllCourses = catchAsyncErrors(async (req, res, next) => {
     courses,
   });
 });
+// get all search courses
+export const getSearchCourses = catchAsyncErrors(async (req, res, next) => {
+  const keyword = req.params.id;
+  const courses = await Course.find({
+    title: {
+      $regex: keyword,
+      $options: "i",
+    },
+  });
+  res.status(200).json({
+    success: true,
+    courses,
+  });
+});
 // get all title courses
 export const getUrlTitleCourses = catchAsyncErrors(async (req, res, next) => {
   const urlTitle = req.params.id;
@@ -174,7 +188,6 @@ export const getCurrentSeasonCourses = catchAsyncErrors(
 export const createCourse = catchAsyncErrors(async (req, res, next) => {
   const {
     title,
-    urlTitle,
     about,
     genre,
     cast,
@@ -194,7 +207,6 @@ export const createCourse = catchAsyncErrors(async (req, res, next) => {
 
   if (
     !title ||
-    !urlTitle ||
     !about ||
     !genre ||
     !cast ||
@@ -216,7 +228,7 @@ export const createCourse = catchAsyncErrors(async (req, res, next) => {
 
   await Course.create({
     title,
-    urlTitle,
+    urlTitle: title.replace(/[\s.]+/g, "-").toLowerCase(),
     about,
     genre,
     cast,
@@ -281,7 +293,6 @@ export const updateCourse = catchAsyncErrors(async (req, res, next) => {
   }
   const {
     title,
-    urlTitle,
     about,
     genre,
     cast,
@@ -301,7 +312,6 @@ export const updateCourse = catchAsyncErrors(async (req, res, next) => {
 
   if (
     !title ||
-    !urlTitle ||
     !about ||
     !genre ||
     !cast ||
@@ -317,7 +327,7 @@ export const updateCourse = catchAsyncErrors(async (req, res, next) => {
   }
 
   course.title = title;
-  course.urlTitle = urlTitle;
+  course.urlTitle = title.replace(/[\s.]+/g, "-").toLowerCase();
 
   course.about = about;
   course.genre = genre;

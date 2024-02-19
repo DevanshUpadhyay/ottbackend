@@ -17,12 +17,14 @@ import {
   getCurrentSeasonCourses,
   getUrlTitleCourses,
   getTopCourses,
+  getSearchCourses,
 } from "../controllers/coursecontroller.js";
 
 import singleUpload from "../middlewares/multer.js";
 const router = express.Router();
 
 router.route("/courses").get(getAllCourses);
+router.route("/search/:id").get(getSearchCourses);
 router.route("/webseries/:id").get(getUrlTitleCourses);
 router.route("/genre/:id").get(getGenreCourses);
 router.route("/language/:id").get(getLanguageCourses);
