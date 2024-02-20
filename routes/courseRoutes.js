@@ -18,26 +18,30 @@ import {
   getUrlTitleCourses,
   getTopCourses,
   getSearchCourses,
+  getCourses,
 } from "../controllers/coursecontroller.js";
 
 import singleUpload from "../middlewares/multer.js";
 const router = express.Router();
 
-router.route("/courses").get(getAllCourses);
-router.route("/search/:id").get(getSearchCourses);
+router.route("/courses").get(getCourses);
+router.route("/courses/page/:pid").get(getAllCourses);
+router.route("/search/:id/page/:pid").get(getSearchCourses);
 router.route("/webseries/:id").get(getUrlTitleCourses);
-router.route("/genre/:id").get(getGenreCourses);
-router.route("/language/:id").get(getLanguageCourses);
-router.route("/platform/:id").get(getPlatformCourses);
-router.route("/subscription/:id").get(getSubscriptionCourses);
-router.route("/cast/:id").get(getCastCourses);
-router.route("/director/:id").get(getDirectorCourses);
-router.route("/creator/:id").get(getCreatorCourses);
+router.route("/genre/:id/page/:pid").get(getGenreCourses);
+router.route("/language/:id/page/:pid").get(getLanguageCourses);
+router.route("/platform/:id/page/:pid").get(getPlatformCourses);
+router.route("/subscription/:id/page/:pid").get(getSubscriptionCourses);
+router.route("/cast/:id/page/:pid").get(getCastCourses);
+router.route("/director/:id/page/:pid").get(getDirectorCourses);
+router.route("/creator/:id/page/:pid").get(getCreatorCourses);
 router.route("/latest").get(getLatestCourses);
 router.route("/top").get(getTopCourses);
-router.route("/season/:id").get(getCurrentSeasonCourses);
+router.route("/season/:id/page/:pid").get(getCurrentSeasonCourses);
 
 router.route("/createcourse").post(singleUpload, createCourse);
+
+// router.route("/language/:id/page/:pid").get(getLanguageCourses);
 
 router
   .route("/course/:id")

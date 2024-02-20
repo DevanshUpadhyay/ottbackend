@@ -4,26 +4,52 @@ import getDataUri from "../utils/dataUri.js";
 import ErrorHandler from "../utils/errorHandler.js";
 import cloudinary from "cloudinary";
 
-// get all courses
-export const getAllCourses = catchAsyncErrors(async (req, res, next) => {
+const limit = 3;
+//
+export const getCourses = catchAsyncErrors(async (req, res, next) => {
   const courses = await Course.find();
   res.status(200).json({
     success: true,
     courses,
   });
 });
+// get all courses
+export const getAllCourses = catchAsyncErrors(async (req, res, next) => {
+  const page = Number(req.params.pid) || 1;
+  let skip = (page - 1) * limit;
+  const count = await Course.find().countDocuments();
+  const pages = Math.ceil(count / limit);
+  const courses = await Course.find().skip(skip).limit(limit);
+  res.status(200).json({
+    success: true,
+    courses,
+    pages,
+  });
+});
 // get all search courses
 export const getSearchCourses = catchAsyncErrors(async (req, res, next) => {
   const keyword = req.params.id;
+  const page = Number(req.params.pid) || 1;
+  let skip = (page - 1) * limit;
+  const count = await Course.find({
+    title: {
+      $regex: keyword,
+      $options: "i",
+    },
+  }).countDocuments();
+  const pages = Math.ceil(count / limit);
   const courses = await Course.find({
     title: {
       $regex: keyword,
       $options: "i",
     },
-  });
+  })
+    .skip(skip)
+    .limit(limit);
   res.status(200).json({
     success: true,
     courses,
+    pages,
   });
 });
 // get all title courses
@@ -47,71 +73,133 @@ export const getUrlTitleCourses = catchAsyncErrors(async (req, res, next) => {
 // get all genre courses
 export const getGenreCourses = catchAsyncErrors(async (req, res, next) => {
   const genre = req.params.id;
+  const page = Number(req.params.pid) || 1;
+  let skip = (page - 1) * limit;
+  const count = await Course.find({
+    genre: {
+      $regex: genre,
+      $options: "i",
+    },
+  }).countDocuments();
+  const pages = Math.ceil(count / limit);
   const courses = await Course.find({
     genre: {
       $regex: genre,
       $options: "i",
     },
-  });
+  })
+    .skip(skip)
+    .limit(limit);
   res.status(200).json({
     success: true,
     courses,
+    pages,
   });
 });
+
 // get all language courses
 export const getLanguageCourses = catchAsyncErrors(async (req, res, next) => {
   const language = req.params.id;
+  const page = Number(req.params.pid) || 1;
+  let skip = (page - 1) * limit;
+  const count = await Course.find({
+    language: {
+      $regex: language,
+      $options: "i",
+    },
+  }).countDocuments();
+  const pages = Math.ceil(count / limit);
   const courses = await Course.find({
     language: {
       $regex: language,
       $options: "i",
     },
-  });
+  })
+    .skip(skip)
+    .limit(limit);
   res.status(200).json({
     success: true,
     courses,
+    pages,
   });
 });
+
 // get all platform courses
 export const getPlatformCourses = catchAsyncErrors(async (req, res, next) => {
   const platform = req.params.id;
-  const courses = await Course.find({
-    "season.platform": {
+  const page = Number(req.params.pid) || 1;
+  let skip = (page - 1) * limit;
+  const count = await Course.find({
+    platform: {
       $regex: platform,
       $options: "i",
     },
-  });
+  }).countDocuments();
+  const pages = Math.ceil(count / limit);
+  const courses = await Course.find({
+    platform: {
+      $regex: platform,
+      $options: "i",
+    },
+  })
+    .skip(skip)
+    .limit(limit);
   res.status(200).json({
     success: true,
     courses,
+    pages,
   });
 });
 // get all cast courses
 export const getCastCourses = catchAsyncErrors(async (req, res, next) => {
   const cast = req.params.id;
+  const page = Number(req.params.pid) || 1;
+  let skip = (page - 1) * limit;
+  const count = await Course.find({
+    cast: {
+      $regex: cast,
+      $options: "i",
+    },
+  }).countDocuments();
+  const pages = Math.ceil(count / limit);
   const courses = await Course.find({
     cast: {
       $regex: cast,
       $options: "i",
     },
-  });
+  })
+    .skip(skip)
+    .limit(limit);
   res.status(200).json({
     success: true,
     courses,
+    pages,
   });
 });
 // get all director courses
 export const getDirectorCourses = catchAsyncErrors(async (req, res, next) => {
   const director = req.params.id;
+  const page = Number(req.params.pid) || 1;
+  let skip = (page - 1) * limit;
+  const count = await Course.find({
+    director: {
+      $regex: director,
+      $options: "i",
+    },
+  }).countDocuments();
+  const pages = Math.ceil(count / limit);
   const courses = await Course.find({
     director: {
       $regex: director,
       $options: "i",
     },
-  });
+  })
+    .skip(skip)
+    .limit(limit);
   res.status(200).json({
     success: true,
     courses,
+    pages,
   });
 });
 // get all latest courses
@@ -141,45 +229,71 @@ export const getTopCourses = catchAsyncErrors(async (req, res, next) => {
 // get all creator courses
 export const getCreatorCourses = catchAsyncErrors(async (req, res, next) => {
   const creator = req.params.id;
+  const page = Number(req.params.pid) || 1;
+  let skip = (page - 1) * limit;
+  const count = await Course.find({
+    creator: {
+      $regex: creator,
+      $options: "i",
+    },
+  }).countDocuments();
+  const pages = Math.ceil(count / limit);
   const courses = await Course.find({
     creator: {
       $regex: creator,
       $options: "i",
     },
-  });
+  })
+    .skip(skip)
+    .limit(limit);
   res.status(200).json({
     success: true,
     courses,
+    pages,
   });
 });
 // get all subscription courses
 export const getSubscriptionCourses = catchAsyncErrors(
   async (req, res, next) => {
     const subscription = req.params.id;
+    const page = Number(req.params.pid) || 1;
+    let skip = (page - 1) * limit;
+    const count = await Course.find({
+      subscription: {
+        $regex: subscription,
+        $options: "i",
+      },
+    }).countDocuments();
+    const pages = Math.ceil(count / limit);
     const courses = await Course.find({
       subscription: {
         $regex: subscription,
         $options: "i",
       },
-    });
+    })
+      .skip(skip)
+      .limit(limit);
     res.status(200).json({
       success: true,
       courses,
+      pages,
     });
   }
 );
 // get all Current Season courses
 export const getCurrentSeasonCourses = catchAsyncErrors(
   async (req, res, next) => {
-    const courses = await Course.find();
     const currentSeason = req.params.id;
+    const count = await Course.find();
+    const pages = Math.ceil(count.length / limit);
     function checkCurrentSeason(show) {
       return String(show.season.length) == String(currentSeason);
     }
-    const currentSeasonCourses = courses.filter(checkCurrentSeason);
+    const courses = courses.filter(checkCurrentSeason);
     res.status(200).json({
       success: true,
-      currentSeasonCourses,
+      courses,
+      pages,
     });
   }
 );
