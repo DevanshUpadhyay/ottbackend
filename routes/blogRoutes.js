@@ -1,13 +1,19 @@
 import express from "express";
 
-import { getAllBlogs, getSingleBlog } from "../controllers/blogcontroller.js";
+import {
+  createBlog,
+  deleteBlog,
+  getAllBlogs,
+  getSingleBlog,
+  updateBlog,
+} from "../controllers/blogcontroller.js";
+import singleUpload from "../middlewares/multer.js";
 const router = express.Router();
 
-router.route("/allblogs").get(getAllBlogs);
+router.route("/blogs").get(getAllBlogs);
+router.route("/createblog").post(singleUpload, createBlog);
+router.route("/blog/:id").get(getSingleBlog).delete(deleteBlog);
 
-router
-  .route("/blog/:id")
-
-  .get(getSingleBlog);
+router.route("/updateblog/:id").post(singleUpload, updateBlog);
 
 export default router;

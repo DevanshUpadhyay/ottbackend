@@ -3,14 +3,10 @@ const schema = new mongoose.Schema({
   title: {
     type: String,
     required: [true, "Please Enter Blog Title"],
-    maxLength: [120, "Title cannot exceeds 120 characters"],
-    minLength: [3, "Title should have more than 3 characters"],
-    // trim: true,
   },
   description: {
     type: String,
     required: [true, "Please Enter Description"],
-    minLength: [20, "Description should have more than 20 characters"],
   },
   content: {
     type: String,
@@ -31,15 +27,15 @@ const schema = new mongoose.Schema({
     default: 0,
   },
 
-  category: {
-    type: String,
-    required: [true, "Please Enter Lecture Category"],
-  },
+  // category: {
+  //   type: String,
+  //   required: [true, "Please Enter Lecture Category"],
+  // },
 
-  createdBy: {
-    type: String,
-    required: [true, "Enter Course Creator  Name"],
-  },
+  // createdBy: {
+  //   type: String,
+  //   required: [true, "Enter Course Creator  Name"],
+  // },
   postedAt: {
     type: String,
   },
