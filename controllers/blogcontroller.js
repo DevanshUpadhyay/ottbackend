@@ -52,7 +52,7 @@ export const createBlog = catchAsyncErrors(async (req, res, next) => {
     message: "Blog Created Successfully.",
   });
 });
-// get all blogs
+// get all blogs.
 export const getAllBlogs = catchAsyncErrors(async (req, res, next) => {
   // const keyword = req.query.keyword || "";
   // const category = req.query.category || "";
@@ -89,6 +89,7 @@ export const getSingleBlog = catchAsyncErrors(async (req, res, next) => {
     blog,
   });
 });
+// delete blog
 export const deleteBlog = catchAsyncErrors(async (req, res, next) => {
   const { id } = req.params;
   const blog = await Blog.findById(id);
