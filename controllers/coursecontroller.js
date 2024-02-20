@@ -130,14 +130,14 @@ export const getPlatformCourses = catchAsyncErrors(async (req, res, next) => {
   const page = Number(req.params.pid) || 1;
   let skip = (page - 1) * limit;
   const count = await Course.find({
-    platform: {
+    "season.platform": {
       $regex: platform,
       $options: "i",
     },
   }).countDocuments();
   const pages = Math.ceil(count / limit);
   const courses = await Course.find({
-    platform: {
+    "season.platform": {
       $regex: platform,
       $options: "i",
     },
