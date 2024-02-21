@@ -4,7 +4,7 @@ import getDataUri from "../utils/dataUri.js";
 import ErrorHandler from "../utils/errorHandler.js";
 import cloudinary from "cloudinary";
 
-const limit = 3;
+const limit = 12;
 //
 export const getCourses = catchAsyncErrors(async (req, res, next) => {
   const courses = await Course.find();
