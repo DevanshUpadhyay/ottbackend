@@ -38,6 +38,7 @@ export const createBlog = catchAsyncErrors(async (req, res, next) => {
 
   await Blog.create({
     title,
+    urlTitle: title.replace(/[\s.]+/g, "-").toLowerCase(),
     description,
     postedAt: `${date} ${month} ${year}`,
     content,
@@ -75,7 +76,36 @@ export const getAllBlogs = catchAsyncErrors(async (req, res, next) => {
     blogs,
   });
 });
+export const getBlogs = catchAsyncErrors(async (req, res, next) => {
+  const limit = 6;
+  const page = Number(req.params.pid) || 1;
+  let skip = (page - 1) * limit;
+  const count = await Blog.find().countDocuments();
+  const pages = Math.ceil(count / limit);
+  const blogs = await Blog.find().skip(skip).limit(limit);
+  res.status(200).json({
+    success: true,
+    blogs,
+    pages,
+  });
+});
+export const getUrlTitleBlog = catchAsyncErrors(async (req, res, next) => {
+  const urlTitle = req.params.id;
+  const blog = await Blog.findOne({
+    urlTitle: {
+      $regex: urlTitle,
+      $options: "i",
+    },
+  });
 
+  if (!blog) {
+    return next(new ErrorHandler("Blog not found", 404));
+  }
+  res.status(200).json({
+    success: true,
+    blog,
+  });
+});
 // get single blog.
 export const getSingleBlog = catchAsyncErrors(async (req, res, next) => {
   const blog = await Blog.findById(req.params.id);
@@ -139,6 +169,7 @@ export const updateBlog = catchAsyncErrors(async (req, res, next) => {
   let year = d.getFullYear();
 
   blog.title = title;
+  blog.urlTitle = title.replace(/[\s.]+/g, "-").toLowerCase();
   blog.description = description;
   // blog.category = category;
   blog.content = content;

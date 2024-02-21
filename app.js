@@ -15,17 +15,19 @@ app.use(
     extended: true,
   })
 );
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  process.env.FRONTEND_URl_DASHBOARD,
+];
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: allowedOrigins,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 import course from "./routes/courseRoutes.js";
 import blog from "./routes/blogRoutes.js";
-
-import { Course } from "./models/Course.js";
 
 app.use("/api/v1", course);
 

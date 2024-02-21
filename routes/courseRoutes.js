@@ -17,6 +17,7 @@ import {
   getCurrentSeasonCourses,
   getUrlTitleCourses,
   getTopCourses,
+  getRelatedCourses,
   getSearchCourses,
   getCourses,
 } from "../controllers/coursecontroller.js";
@@ -35,10 +36,10 @@ router.route("/subscription/:id/page/:pid").get(getSubscriptionCourses);
 router.route("/cast/:id/page/:pid").get(getCastCourses);
 router.route("/director/:id/page/:pid").get(getDirectorCourses);
 router.route("/creator/:id/page/:pid").get(getCreatorCourses);
+router.route("/season/:id/page/:pid").get(getCurrentSeasonCourses);
 router.route("/latest").get(getLatestCourses);
 router.route("/top").get(getTopCourses);
-router.route("/season/:id/page/:pid").get(getCurrentSeasonCourses);
-
+router.route("/related/:id").get(getRelatedCourses);
 router.route("/createcourse").post(singleUpload, createCourse);
 
 // router.route("/language/:id/page/:pid").get(getLanguageCourses);

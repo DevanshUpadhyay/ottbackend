@@ -4,6 +4,10 @@ const schema = new mongoose.Schema({
     type: String,
     required: [true, "Please Enter Blog Title"],
   },
+  urlTitle: {
+    type: String,
+    required: [true, "Please Enter Blog urlTitle"],
+  },
   description: {
     type: String,
     required: [true, "Please Enter Description"],

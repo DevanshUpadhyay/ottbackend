@@ -226,6 +226,31 @@ export const getTopCourses = catchAsyncErrors(async (req, res, next) => {
     topCourses,
   });
 });
+// get all related courses
+export const getRelatedCourses = catchAsyncErrors(async (req, res, next) => {
+  const courses = await Course.find();
+  const genres = req.params.id;
+  function checkRealated(show) {
+    function findCommonElements(arr1, arr2) {
+      return arr1.filter((element) => arr2.includes(element));
+    }
+    const relatedGenres = show.genre.split(/,\s*/);
+    const currentGenres = genres.split("-");
+    function toLowerCaseArray(arr) {
+      return arr.map((element) => element.toLowerCase());
+    }
+    const lowerCaseArray = toLowerCaseArray(relatedGenres);
+    const commonElements = findCommonElements(lowerCaseArray, currentGenres);
+
+    return commonElements.length >= 1;
+  }
+  const relatedMovies = courses.filter(checkRealated);
+  const relatedCourses = relatedMovies.slice(0, 12);
+  res.status(200).json({
+    success: true,
+    relatedCourses,
+  });
+});
 // get all creator courses
 export const getCreatorCourses = catchAsyncErrors(async (req, res, next) => {
   const creator = req.params.id;
