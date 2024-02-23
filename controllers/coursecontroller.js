@@ -24,6 +24,7 @@ export const getAllCourses = catchAsyncErrors(async (req, res, next) => {
     success: true,
     courses,
     pages,
+    count,
   });
 });
 // get all search courses
@@ -50,6 +51,7 @@ export const getSearchCourses = catchAsyncErrors(async (req, res, next) => {
     success: true,
     courses,
     pages,
+    count,
   });
 });
 // get all title courses
@@ -94,6 +96,7 @@ export const getGenreCourses = catchAsyncErrors(async (req, res, next) => {
     success: true,
     courses,
     pages,
+    count,
   });
 });
 
@@ -121,6 +124,7 @@ export const getLanguageCourses = catchAsyncErrors(async (req, res, next) => {
     success: true,
     courses,
     pages,
+    count,
   });
 });
 
@@ -148,6 +152,7 @@ export const getPlatformCourses = catchAsyncErrors(async (req, res, next) => {
     success: true,
     courses,
     pages,
+    count,
   });
 });
 // get all cast courses
@@ -174,6 +179,7 @@ export const getCastCourses = catchAsyncErrors(async (req, res, next) => {
     success: true,
     courses,
     pages,
+    count,
   });
 });
 // get all director courses
@@ -200,6 +206,7 @@ export const getDirectorCourses = catchAsyncErrors(async (req, res, next) => {
     success: true,
     courses,
     pages,
+    count,
   });
 });
 // get all latest courses
@@ -275,6 +282,7 @@ export const getCreatorCourses = catchAsyncErrors(async (req, res, next) => {
     success: true,
     courses,
     pages,
+    count,
   });
 });
 // get all subscription courses
@@ -302,6 +310,7 @@ export const getSubscriptionCourses = catchAsyncErrors(
       success: true,
       courses,
       pages,
+      count,
     });
   }
 );
@@ -319,6 +328,7 @@ export const getCurrentSeasonCourses = catchAsyncErrors(
       success: true,
       courses,
       pages,
+      count,
     });
   }
 );

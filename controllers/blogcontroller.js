@@ -87,6 +87,7 @@ export const getBlogs = catchAsyncErrors(async (req, res, next) => {
     success: true,
     blogs,
     pages,
+    count,
   });
 });
 export const getUrlTitleBlog = catchAsyncErrors(async (req, res, next) => {
