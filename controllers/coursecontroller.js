@@ -27,6 +27,35 @@ export const getAllCourses = catchAsyncErrors(async (req, res, next) => {
     count,
   });
 });
+// get all admin courses
+export const getAdminCourses = catchAsyncErrors(async (req, res, next) => {
+  const keyword = req.query.keyword || "";
+  const page = Number(req.query.pid) || 1;
+  let skip = (page - 1) * limit;
+  const count = await Course.find({
+    title: {
+      $regex: keyword,
+      $options: "i",
+    },
+  }).countDocuments();
+  const pages = Math.ceil(count / limit);
+  const courses = await Course.find({
+    title: {
+      $regex: keyword,
+      $options: "i",
+    },
+  })
+    .skip(skip)
+    .limit(limit);
+  res.status(200).json({
+    success: true,
+    data: {
+      courses,
+      pages,
+      count,
+    },
+  });
+});
 // get all search courses
 export const getSearchCourses = catchAsyncErrors(async (req, res, next) => {
   const keyword = req.params.id;

@@ -20,6 +20,7 @@ import {
   getRelatedCourses,
   getSearchCourses,
   getCourses,
+  getAdminCourses,
 } from "../controllers/coursecontroller.js";
 
 import singleUpload from "../middlewares/multer.js";
@@ -27,6 +28,7 @@ const router = express.Router();
 
 router.route("/courses").get(getCourses);
 router.route("/courses/page/:pid").get(getAllCourses);
+router.route("/admincourses").get(getAdminCourses);
 router.route("/search/:id/page/:pid").get(getSearchCourses);
 router.route("/webseries/:id").get(getUrlTitleCourses);
 router.route("/genre/:id/page/:pid").get(getGenreCourses);
